@@ -11,17 +11,20 @@ export default function Todo(props) {
             defaultChecked={props.completed}
             onChange={() => props.toggleTaskCompleted(props.id)}
           />
-          <label className="todo-label" htmlFor={props.id}>
-            {props.name}
+          <label
+            className={props.completed ? "todo-active-label" : "todo-label"}
+            htmlFor={props.id}
+          >
+            <span>{props.name}</span>
           </label>
         </div>
         <div className="btn-group">
           <button
             type="button"
-            className="btn btn__danger"
+            className="btn btn__primary"
             onClick={() => props.deleteTask(props.id)}
           >
-            Delete <span className="visually-hidden">{props.name}</span>
+            Delete
           </button>
         </div>
       </div>
