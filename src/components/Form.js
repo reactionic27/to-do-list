@@ -2,14 +2,17 @@ import React, { useState } from "react";
 
 function Form(props) {
   const [name, setName] = useState("");
+  const [isEmpty, setEmpty] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!name.trim()) {
+      setEmpty(true);
       return;
     }
     props.addTask(name);
     setName("");
+    setEmpty(false);
   }
 
   function handleChange(e) {
@@ -36,6 +39,7 @@ function Form(props) {
           </button>
         </div>
       </div>
+      {isEmpty && <div className="error-message">Name can not be blank</div>}
     </form>
   );
 }

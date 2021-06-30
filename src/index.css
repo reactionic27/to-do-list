@@ -157,7 +157,7 @@ body {
   margin-bottom: 1rem;
 }
 .input__lg {
-  padding: 2rem;
+  padding: 1rem 2rem;
   border: 2px solid #000;
 }
 .input__lg:focus {
@@ -188,6 +188,7 @@ body {
   flex-wrap: wrap;
 }
 .todo > * {
+  width: 100%;
   flex: 0 0 100%;
 }
 .todo-text {
@@ -287,8 +288,15 @@ body {
   font-size: 20px !important;
   text-decoration: line-through;
   font-style: italic;
+  font-weight: bold;
 }
-
 .todo-label {
   font-size: 20px !important;
+}
+.error-message {
+  font-size: 14px;
+  color: red;
+}
+.name-text {
+  word-break: break-all;
 }

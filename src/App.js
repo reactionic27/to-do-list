@@ -12,28 +12,30 @@ function usePrevious(value) {
 }
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem("tasks") || "[]"));
 
   const toggleTaskCompleted = (id) => {
     const updatedTasks = tasks.map((task) => {
       if (id === task.id) {
-        return { ...task, completed: !task.completed };
+        return { ...task, done: !task.done };
       }
       return task;
     });
     setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
   const deleteTask = (id) => {
     const remainingTasks = tasks.filter((task) => id !== task.id);
     setTasks(remainingTasks);
+    localStorage.setItem("tasks", JSON.stringify(remainingTasks));
   };
 
   const taskList = tasks.map((task) => (
     <Todo
       id={task.id}
       name={task.name}
-      completed={task.completed}
+      done={task.done}
       key={task.id}
       toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
@@ -41,8 +43,9 @@ function App() {
   ));
 
   const addTask = (name) => {
-    const newTask = { id: "todo-" + nanoid(), name: name, done: false };
+    const newTask = { id: nanoid(), name: name, done: false };
     setTasks([...tasks, newTask]);
+    localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
   };
 
   const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
@@ -58,11 +61,11 @@ function App() {
   }, [tasks.length, prevTaskLength]);
 
   const deleteDoneTasks = () => {
-    const updatedTasks = tasks.filter((task) => task.completed !== true);
+    const updatedTasks = tasks.filter((task) => task.done !== true);
     setTasks(updatedTasks);
-  }
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
 
-  console.log("tasks", tasks);
   return (
     <div className="todoapp stack-large">
       <Form addTask={addTask} />
@@ -80,7 +83,11 @@ function App() {
             {taskList}
           </ul>
           <div>
-            <button type="button" className="btn btn__danger" onClick={deleteDoneTasks}>
+            <button
+              type="button"
+              className="btn btn__danger"
+              onClick={deleteDoneTasks}
+            >
               Delete All Done
             </button>
           </div>

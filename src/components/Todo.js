@@ -8,14 +8,14 @@ export default function Todo(props) {
           <input
             id={props.id}
             type="checkbox"
-            defaultChecked={props.completed}
+            defaultChecked={props.done}
             onChange={() => props.toggleTaskCompleted(props.id)}
           />
           <label
-            className={props.completed ? "todo-active-label" : "todo-label"}
+            className={props.done ? "todo-active-label" : "todo-label"}
             htmlFor={props.id}
           >
-            <span>{props.name}</span>
+            <span className="name-text">{props.name}</span>
           </label>
         </div>
         <div className="btn-group">
